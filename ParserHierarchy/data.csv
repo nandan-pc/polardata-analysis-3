@@ -1,0 +1,11 @@
+State,Content ratio,Metadata ratio
+application/html,2.941,0.124
+text/plain,9.375,0.052
+application/msword,0.172,0.043
+application/pdf,0.194,0.029
+application/rdf,4.360,0.323
+application/rss,1.222,0.125
+application/rtf,0.099,0.019
+application/xhtml,2.092,0.154
+audio/mpeg,0.007,0.026
+message/rfc822,9.662,0.322
