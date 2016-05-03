@@ -9,5 +9,9 @@ Usage of Ner_Extract program.
 
 The NER output is present in ner_result for CoreNLP, OpenNLP and NLTK respectively. 
 
-To view the visualization we have used D3 venn.js which uses  lastfm.jsonp 
+We have used D3 venn.js.   
+To view the visualization click on 
 > /node_modules/venn.js/examples/intersection_tooltip.html
+
+Data used for this visualization 
+> /node_modules/venn.js/examples/lastfm.jsonp
