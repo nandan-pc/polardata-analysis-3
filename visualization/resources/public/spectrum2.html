@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Measurement Spectrum</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      rect.bordered {
+        stroke: #E6E6E6;
+        stroke-width:2px;   
+      }
+
+      text.mono {
+        font-size: 9pt;
+        font-family: Consolas, courier;
+        fill: #aaa;
+      }
+
+      text.axis-workweek {
+        fill: #000;
+      }
+
+      text.axis-worktime {
+        fill: #000;
+      }
+	body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: auto;
+  padding-top: 40px;
+  position: relative;
+  width: 960px;
+}
+
+button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.bullet { font: 10px sans-serif; }
+.bullet .marker { stroke: #000; stroke-width: 2px; }
+.bullet .tick line { stroke: #666; stroke-width: .5px; }
+.bullet .range.s0 { fill: #eee; }
+.bullet .range.s1 { fill: #ddd; }
+.bullet .range.s2 { fill: #ccc; }
+.bullet .measure.s0 { fill:  steelblue;}
+.bullet .measure.s1 { fill: lightsteelblue; }
+.bullet .title { font-size: 14px; font-weight: bold; }
+.bullet .subtitle { fill: #999; }
+    </style>
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">CSCI 599 Assignment 3</a>
+            </div>
+            </nav>
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid" >
+		<br/><br/>
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3 class="page-header">
+                            Measurement spectrum | <small id="name"> </small>
+                        </h3>
+                        
+                    </div>
+                </div>
+                
+			<div class="row" id="options">
+				<div class="col-lg-3">
+					<select id="chart_no" onchange="view()" class="form-control">
+						<option value="ner_spectrum.json">All measurments</option>
+						<option value="ner_length.json">Measurements of type length</option>
+						<option value="ner_spectrum_domain.json">Mesurements under org domain</option>
+						<option value="ner_html.json">Mesurements under HTML files</option>
+					</select>
+				</div>
+			</div>
+			<div id="chart_panel">
+			</div>
+						
+        </div></br>     
+    </div>
+    <!-- /#wrapper -->
+   	
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/d3.v3.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="d3.layout.cloud.js"></script> 
+   <script src="bullet.js"></script>
+    <script type="text/javascript">
+	viewChart("ner_spectrum.json");
+	function view()
+	{
+		document.getElementById("chart_panel").innerHTML = "";
+		filename = document.getElementById("chart_no").value;
+		viewChart(filename);
+	}
+	function viewChart(filename)
+	{
+	var margin = {top: 5, right: 40, bottom: 20, left: 120},
+    width = 960 - margin.left - margin.right,
+    height = 50 - margin.top - margin.bottom;
+
+var chart = d3.bullet()
+    .width(width)
+    .height(height);
+
+d3.json(filename, function(error, data) {
+  if (error) throw error;
+
+  var svg = d3.select("#chart_panel").selectAll("svg")
+      .data(data)
+    .enter().append("svg")
+      .attr("class", "bullet")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .call(chart);
+
+  var title = svg.append("g")
+      .style("text-anchor", "end")
+      .attr("transform", "translate(-6," + height / 2 + ")");
+
+  title.append("text")
+      .attr("class", "title")
+      .text(function(d) { return d.title; });
+
+});
+    }
+    </script>
+
+</body>
+
+</html>
