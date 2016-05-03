@@ -1,0 +1,47 @@
+corenlpfile = '/home/nandan/corenlpoutfilename.txt'
+
+corenlptokens = [line.rstrip('\n') for line in open(corenlpfile)]
+
+opennlpfile = '/home/nandan/opennlpoutfilename.txt'
+
+opennlptokens = [line.rstrip('\n') for line in open(opennlpfile)]
+
+nltkfile = '/home/nandan/outfilename.txt'
+
+nltktokens = [line.rstrip('\n') for line in open(nltkfile)]
+
+
+
+set_corenlp  = set(corenlptokens)
+
+set_opennlp = set(opennlptokens)
+
+set_nltk = set(nltktokens)
+
+max_joint = set_corenlp & set_opennlp & set_nltk
+
+max_joint_len = max_joint.__len__()
+
+corenlp_int_opennlp = set_corenlp & set_opennlp - ( max_joint)
+
+corenlp_int_opennlp_len = corenlp_int_opennlp.__len__()
+
+corenlp_int_nltk = set_corenlp & set_nltk - max_joint
+
+corenlp_int_nltk_len = corenlp_int_nltk.__len__()
+
+nltk_int_opennlp = set_nltk  & set_corenlp - max_joint
+
+nltk_int_opennlp = nltk_int_opennlp.__len__()
+
+corenlp = set_corenlp - corenlp_int_nltk - corenlp_int_opennlp - max_joint
+
+corenlp_len = corenlp.__len__()
+
+opennlp = set_opennlp - nltk_int_opennlp - corenlp_int_opennlp - max_joint
+
+opennlp_len = opennlp.__len__()
+
+nltk = set_nltk - nltk_int_opennlp - corenlp_int_nltk - max_joint
+
+nltk_len = nltk.__len__()
