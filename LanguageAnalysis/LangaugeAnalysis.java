@@ -44,7 +44,7 @@ public class LangaugeAnalysis {
 	      return object.getLanguage();
 	
 }
-	public static void showFiles(File[] files)throws Exception{
+	public static void showFiles(File[] file,String outputDirectorys)throws Exception{
 		String language = null;
 		
 		for (File file: files){
@@ -65,7 +65,7 @@ public class LangaugeAnalysis {
 			
 		}
 		
-		writeJson();
+		writeJson(outputDirectory);
 		
 	}
 	
@@ -100,7 +100,7 @@ public class LangaugeAnalysis {
 		
 	}
 	
-	public static void writeJson() throws IOException{
+	public static void writeJson(String outputDirectory) throws IOException{
 		
 		JSONArray langDetail = new JSONArray();
 		
@@ -117,7 +117,7 @@ public class LangaugeAnalysis {
 			i++;
 		}
 		
-		try (FileWriter file = new FileWriter("C:\\Users\\NandanPadar\\Documents\\SPRING 2016\\599\\Assignment3\\file1.json")) {
+		try (FileWriter file = new FileWriter(outputDirectory + "file1.json")) {
 			file.write(langDetail.toJSONString());
 			System.out.println("Successfully Copied JSON Object to File...");
 			System.out.println("\nJSON Object: " + langDetail);
@@ -129,8 +129,11 @@ public class LangaugeAnalysis {
 	
 	
 	public static void main(String[] args) throws Exception{
-		File[] files = new File("C:\\PolarDumpTrainData\\text\\html\\metascore\\").listFiles();
-		showFiles(files);
+		
+		String inputDirectory = args[0];
+		String outputDirectory = args[1]
+		File[] files = new File(inputDirectory).listFiles();
+		showFiles(files,outputDirectory);
 	}
 	
 }
